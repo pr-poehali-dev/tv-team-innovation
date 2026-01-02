@@ -2,9 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Icon from "@/components/ui/icon";
+import { useState } from "react";
 
 const Index = () => {
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const features = [
     {
       icon: "Tv",
@@ -31,41 +34,60 @@ const Index = () => {
   const channelCategories = [
     {
       category: "Общие",
-      channels: ["Первый HD", "Первый", "Россия 1 HD", "Россия 1", "Пятница! HD", "Рен ТВ HD", "НТВ HD", "СТС HD", "ТНТ HD", "ТНТ4 HD", "Москва 24", "ТВЦ", "Звезда", "Пятый Канал"]
+      icon: "Home",
+      channels: ["Первый HD", "Первый HD (Uncomp)", "Первый", "Первый +2", "Первый +4", "Первый +6", "Первый +8", "Первый HD +4", "Первый Европа", "Россия 1 HD", "Россия 1 HD (Uncomp)", "Россия 1", "Россия 1 +2", "Россия 1 +4", "Россия 1 +6", "Россия 1 +8", "Россия-Культура", "РТР Планета", "Пятница! HD", "Пятница +2", "Пятница +6", "Рен ТВ HD", "Рен ТВ +2", "Рен ТВ +4", "Рен ТВ +6", "Рен ТВ International", "НТВ HD", "НТВ HD (Uncomp)", "НТВ +2", "НТВ +4", "НТВ +6", "НТВ +8", "СТС HD", "СТС HD (Uncomp)", "СТС +2", "СТС +4", "СТС +6", "СТС International", "ТНТ HD", "ТНТ HD (Uncomp)", "ТНТ +2", "ТНТ +4", "ТНТ +6", "ТНТ4 HD", "ТНТ4 +2", "ТНТ4 +4", "Москва 24", "ТВЦ", "ТВЦ +2", "ТВЦ +4", "ТВЦ +6", "ТВЦ International", "Звезда", "Звезда +2", "Звезда +4", "Звезда +6", "Звезда Плюс", "Победа", "Пятый Канал", "Пятый Канал +2", "Пятый Канал +4", "Пятый Канал +6", "Пятый Канал International"]
     },
     {
       category: "Новости",
-      channels: ["Россия 24", "РБК HD", "RT HD", "Дождь", "Известия", "Мир 24", "Настоящее время HD", "360 Новости", "EuroNews", "BBC World News", "CNN", "FOX News HD"]
+      icon: "Newspaper",
+      channels: ["Россия 24", "РБК HD", "RT HD", "Дождь", "Известия", "Мир 24", "Настоящее время HD", "360 Новости", "EuroNews", "BBC World News Europe", "CNN", "FOX News HD", "RTVI", "Asharq News", "France 24", "Al Jazeera"]
     },
     {
       category: "Кино",
-      channels: ["Киносемья HD", "Кинохит HD", "Киносвидание HD", "Наше новое кино", "Киномикс HD", "Кинопремьера HD", "Мужское кино HD", "TV 1000", "Amedia Hit HD", "Мосфильм HD", "Дом Кино", "ТВ3", "НТВ Сериал", "Fox HD"]
+      icon: "Film",
+      channels: ["Киносемья HD", "Киносемья HD (Uncomp)", "Кинохит HD", "Кинохит HD (Uncomp)", "Киносвидание HD", "Наше новое кино", "Киномикс HD", "Киномикс HD (Uncomp)", "Кинопремьера HD", "Кинопремьера HD (Uncomp)", "Мужское кино HD", "Родное кино", "Индийское кино", "Киносерия HD", "Киноужас HD", "Кинокомедия HD", "Start World HD", "Start Air HD", "TV 1000", "TV 1000 Action", "TV 1000 Русское Кино", "TV 1000 World Kino", "VIP Comedy HD", "VIP Premiere HD", "VIP Megahit HD", "ViP Serial HD", "Amedia Hit HD", "Amedia 1 HD", "Amedia 2 HD", "Amedia Premium HD", "НСТ", "Мосфильм HD", "Кино ТВ HD", "Остросюжетное HD", "Дом Кино", "Дом Кино Премиум HD", "ЕвроКино", "ТВ3", "ТВ 3 +2", "ТВ 3 +4", "ТВ 3 +6", "Домашний", "Домашний +2", "Домашний +4", "Домашний +6", "Домашний International", "НТВ Сериал", "НТВ Хит", "Fox HD", "Fox life", "Paramount Channel HD", "Премиальное HD", "Романтичное HD", "Иллюзион+", "Русский бестселлер", "Русский Иллюзион", "Русский роман", "Русский Детектив", "Комедия", "Любимое Кино", "Шокирующее HD", "Комедийное HD", "Криминальное HD", "Наше HD", "Bollywood HD", "Plan B HD", ".Sci-Fi", ".Black", ".Red HD"]
+    },
+    {
+      category: "Кинозалы",
+      icon: "Clapperboard",
+      channels: ["Premiere HD", "Premium HD", "Thriller HD", "Paradox HD", "РуКино HD", "Paradise HD", "Victory HD", "Serial HD", "USSR HD", "VHS HD", "Insomnia HD", "BCU Action HD", "BCU Cinema HD", "BCU Comedy HD", "BCU Marvel HD", "BCU Stars HD", "BCU Romantic HD", "BCU History HD", "BCU Criminal HD", "Киноджем 1 HD", "Киноджем 2 HD", "CineMan", "CineMan Premium", "CineMan Top", "CineMan Action", "CineMan Marvel", "MM NewFilm RU HD", "MM Боевик HD", "MM Комедия HD", "MM Триллер HD", "MM Ужасы HD", "MM Фантастика HD"]
+    },
+    {
+      category: "UHD",
+      icon: "Monitor",
+      channels: ["Insight UHD", "BCU Premiere Ultra 4K", "Кино UHD", "Cinema UHD", "Сериал UHD", "Museum UHD", "Глазами туриста 4K", "Наша сибирь 4K", "Yosso 4K", "BCU Kids 4K", "Travelxp 4K", "Love Nature 4K", "Aquarium 4K", "Quadro 4K", "Home 4K", "MyZen 4K"]
     },
     {
       category: "Спорт",
-      channels: ["Матч! HD", "Матч! Футбол 1", "Матч! Премьер", "Матч! Игра FHD", "Матч! Арена HD", "Футбольный HD", "Спортивный HD", "Хоккейный HD"]
+      icon: "Trophy",
+      channels: ["Матч! SD", "Матч! Футбол 1 SD", "Матч! Футбол 2 SD", "Матч! Футбол 3 SD", "Матч! Премьер SD", "Матч! Игра FHD", "Матч! Игра HD (Uncomp)", "Матч! Арена HD", "МАТЧ! АРЕНА HD (Uncomp)", "Матч! Страна", "МАТЧ! СТРАНА HD (Uncomp)", "Матч! Планета", "Футбол HD", "Футбольный HD", "Спортивный HD", "Хоккейный HD"]
     },
     {
       category: "Музыка",
-      channels: ["MTV Russia", "MTV Live HD", "Муз ТВ HD", "RU.TV", "Bridge TV", "Mezzo Live HD", "Шансон ТВ", "Жара HD", "Music Box HD", "Europa Plus TV HD", "ТНТ Music HD"]
+      icon: "Music",
+      channels: ["MTV Russia", "MTV Live HD", "MTV Club", "MTV Hits", "MTV 80s", "MTV 90s", "MTV 00s", "МУЗ ТВ HD", "Music", "RU.TV", "Bridge TV", "Bridge TV Deluxe HD", "Bridge TV Classic", "Bridge TV Hits", "Bridge TV Русский хит", "Bridge TV Fresh", "Bridge TV Шлягер", "Mezzo Live HD", "iConcerts HD", "Шансон ТВ", "MCM TOP", "Ля-минор", "Жара HD", "Trace urban", "O2TV HD", "Russian MusicBox HD", "Музыка Первого", "4 Ever music HD", "Music Box Gold", "EU Music HD", "C-Music HD", "AIVA HD", "Europa Plus TV HD", "ТНТ Music HD", "Clubbing TV HD", "Жар Птица", "Танцуй"]
     },
     {
       category: "Детские",
-      channels: ["Мульт HD", "Cartoon Network", "Nickelodeon HD", "Nick Jr", "Карусель", "СТС Kids HD", "Мультимузыка", "Baby TV", "Малыш", "Disney", "JimJam", "Boomerang"]
+      icon: "Baby",
+      channels: ["Мульт HD", "Cartoon Network", "Солнце", "TiJi", "Gulli Girl", "Детский мир", "Мама", "В гостях у сказки", "Канал О", "Nickelodeon HD", "Nick Jr", "Уникум HD", "Карусель", "Карусель +2", "Карусель +4", "Карусель +6", "СТС Kids HD", "Мультимузыка", "JimJam", "Boomerang", "Радость Моя", "Ani", "Baby TV", "Малыш", "Рыжий", "Мультиландия", "Капитан Фантастика HD", "Duck HD", "Лёва", "BCU Kids HD", "Cartoons 90", "Cartoons Short", "Disney"]
     },
     {
       category: "Образование",
-      channels: ["Наука 2.0", "Discovery Channel HD", "National Geographic HD", "Viasat History HD", "Моя Планета HD", "History HD", "TLC HD", "Travel Channel HD", "Техно 24", "Телепутешествия"]
+      icon: "GraduationCap",
+      channels: ["Наука 2.0", "Discovery Channel HD", "National Geographic HD", "Viasat History CEE HD", "Моя Планета HD", "Приключения HD", "Тайны Галактики HD", "Оружие", "History HD", "History2 HD", "Investigation Discovery CEE HD", "TLC HD", "Космический HD", "Нано HD", "Техно 24", "Доктор", "Da Vinci", "История", "365 дней ТВ", "RTG TV", "RTG HD", "Travel Channel HD", "Travel+Adventure HD", "Пёс и Ко", "Мужской", "Большая Азия HD", "Здоровое ТВ", "Арсенал HD", "Телекафе", "Глазами туриста HD", "DocuBox HD", "Телепутешествия", "Мир Вокруг HD", "Поехали! HD", "Smartzone HD", "КтоКуда", "Motor Trend HD", "DTX HD", "Discovery Science HD", "HGTV HD", "Terra HD"]
     },
     {
       category: "Природа",
-      channels: ["Viasat Nature", "Nat Geo Wild HD", "Animal Planet HD", "В мире животных HD", "Охота и рыбалка", "Живая природа HD", "Ocean TV"]
+      icon: "Trees",
+      channels: ["Big Planet", "Viasat Nature", "Усадьба", "Nat Geo Wild HD", "Диалоги о рыбалке", "Дикий", "Охотник и рыболов HD", "Animal Planet HD", "В мире животных HD", "Охота и рыбалка", "Дикая Охота HD", "Дикая Рыбалка HD", "Живая природа HD", "Живая Планета", "Загородный", "Загородный int HD", "Ocean TV"]
+    },
+    {
+      category: "Прочее",
+      icon: "Sparkles",
+      channels: ["Viasat Explore CEE HD", "АВТО 24", "Сарафан", "Кухня ТВ", "Foodtime HD", "Еда", "Food Network HD", "БОБЁР", "2X2", "2х2 +2", "КВН ТВ", "Продвижение", "Че", "Че +4", "СТС love", "Ностальгия", "Время", "НТВ Стиль", "HDL", "НТВ Мир", "Мир HD", "Мир +2", "Мир +6", "ОТР", "Суббота", "Суббота +2", "Ю", "Вопросы и ответы", "RTД HD", "Авто плюс HD", "E TV", "Точка ТВ", "360 HD", "Спас", "Союз", "Доверие", "Красная линия", "ЛДПР ТВ", "Ювелирочка", "Fashion TV HD", "Shop and Show", "НТВ Право", "Кто есть кто", "Психология", "Домашние животные", "Зоопарк", "Успех", "Перец International", "Анекдот ТВ"]
     }
   ];
-
-  const displayChannels = channelCategories.flatMap(cat => 
-    cat.channels.slice(0, 2).map(ch => ({ name: ch, category: cat.category }))
-  );
 
   const plans = [
     {
@@ -151,40 +173,97 @@ const Index = () => {
 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="font-heading text-4xl sm:text-5xl font-bold mb-4">
-              Все категории каналов
+              Каталог каналов
             </h2>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-lg mb-8">
               Более 2000 каналов в вашем распоряжении
             </p>
           </div>
-          <div className="space-y-12">
-            {channelCategories.map((cat, catIndex) => (
-              <div key={catIndex} className="animate-fade-in" style={{ animationDelay: `${catIndex * 100}ms` }}>
-                <div className="flex items-center gap-3 mb-6">
-                  <Badge variant="default" className="text-base px-4 py-2">
+
+          <Tabs defaultValue="all" className="w-full" onValueChange={setSelectedCategory}>
+            <div className="flex justify-center mb-8">
+              <TabsList className="glass-card p-2 h-auto flex-wrap gap-2">
+                <TabsTrigger value="all" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                  Все каналы
+                </TabsTrigger>
+                {channelCategories.map((cat, idx) => (
+                  <TabsTrigger 
+                    key={idx} 
+                    value={cat.category}
+                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex items-center gap-2"
+                  >
+                    <Icon name={cat.icon} size={16} />
                     {cat.category}
-                  </Badge>
-                  <div className="h-px flex-1 bg-border"></div>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                  {cat.channels.map((channel, chIndex) => (
-                    <Card key={chIndex} className="glass-card hover:border-primary hover:scale-105 transition-all cursor-pointer">
-                      <CardContent className="p-4">
-                        <div className="flex flex-col items-center text-center gap-2">
-                          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                            <Icon name="Tv" className="text-primary" size={20} />
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
+
+            <TabsContent value="all" className="space-y-12 mt-8">
+              {channelCategories.map((cat, catIndex) => (
+                <div key={catIndex} className="animate-fade-in">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="flex items-center gap-2">
+                      <Icon name={cat.icon} className="text-primary" size={20} />
+                      <Badge variant="default" className="text-base px-4 py-2">
+                        {cat.category}
+                      </Badge>
+                    </div>
+                    <div className="h-px flex-1 bg-border"></div>
+                    <span className="text-sm text-muted-foreground">{cat.channels.length} каналов</span>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                    {cat.channels.map((channel, chIndex) => (
+                      <Card key={chIndex} className="glass-card hover:border-primary hover:scale-105 transition-all cursor-pointer">
+                        <CardContent className="p-4">
+                          <div className="flex flex-col items-center text-center gap-2">
+                            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                              <Icon name="Tv" className="text-primary" size={20} />
+                            </div>
+                            <p className="font-medium text-xs leading-tight line-clamp-2">{channel}</p>
                           </div>
-                          <p className="font-medium text-xs leading-tight">{channel}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ))}
+            </TabsContent>
+
+            {channelCategories.map((cat, catIndex) => (
+              <TabsContent key={catIndex} value={cat.category} className="mt-8">
+                <div className="animate-fade-in">
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <Icon name={cat.icon} className="text-primary" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="font-heading text-2xl font-bold">{cat.category}</h3>
+                        <p className="text-muted-foreground">{cat.channels.length} каналов в категории</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    {cat.channels.map((channel, chIndex) => (
+                      <Card key={chIndex} className="glass-card hover:border-primary hover:scale-105 transition-all cursor-pointer">
+                        <CardContent className="p-5">
+                          <div className="flex flex-col items-center text-center gap-3">
+                            <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                              <Icon name="Tv" className="text-primary" size={24} />
+                            </div>
+                            <p className="font-medium text-sm leading-tight">{channel}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              </TabsContent>
             ))}
-          </div>
+          </Tabs>
         </div>
       </section>
 
