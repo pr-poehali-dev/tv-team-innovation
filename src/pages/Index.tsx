@@ -41,25 +41,11 @@ const Index = () => {
 
   const plans = [
     {
-      name: "Базовый",
-      price: "299",
+      name: "Единый тариф",
+      price: "350",
       period: "мес",
-      features: ["500 каналов", "HD качество", "1 устройство", "Архив 3 дня"],
-      popular: false
-    },
-    {
-      name: "Стандарт",
-      price: "499",
-      period: "мес",
-      features: ["1000 каналов", "Full HD качество", "3 устройства", "Архив 5 дней"],
+      features: ["2000+ каналов", "Full HD качество", "1 устройство", "Архив 7 дней"],
       popular: true
-    },
-    {
-      name: "Премиум",
-      price: "799",
-      period: "мес",
-      features: ["2000+ каналов", "4K качество", "5 устройств", "Архив 7 дней"],
-      popular: false
     }
   ];
 
@@ -169,13 +155,13 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-heading text-4xl sm:text-5xl font-bold mb-4">
-              Выберите свой тариф
+              Простая цена
             </h2>
             <p className="text-muted-foreground text-lg">
-              Все тарифы включают 7 дней бесплатного пробного периода
+              Один тариф со всеми возможностями сервиса
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="flex justify-center">
             {plans.map((plan, index) => (
               <Card 
                 key={index} 
